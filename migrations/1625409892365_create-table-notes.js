@@ -2,7 +2,7 @@
 
 exports.shorthands = undefined;
 
-exports.up = pgm => {
+exports.up = (pgm) => {
   pgm.createTable(
     {
       schema: 'notesapp',
@@ -33,10 +33,11 @@ exports.up = pgm => {
         type: 'TEXT',
         notNull: true,
       },
-    });
+    },
+  );
 };
 
-exports.down = pgm => {
+exports.down = (pgm) => {
   pgm.dropTable({
     schema: 'notesapp',
     name: 'notes',
