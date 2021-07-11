@@ -15,7 +15,7 @@ class UsersService {
     const id = `user-${nanoid(16)}`;
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = {
-      text: 'INSERT INTO users VALUES($1, $2, $3, $4) RETURNING id',
+      text: 'INSERT INTO notesapp.users VALUES($1, $2, $3, $4) RETURNING id',
       values: [id, username, hashedPassword, fullname],
     };
     const result = await this._pool.query(query);
@@ -27,7 +27,7 @@ class UsersService {
 
   async verifyNewUsername(username) {
     const query = {
-      text: 'SELECT username FROM users WHERE username = $1',
+      text: 'SELECT username FROM notesapp.users WHERE username = $1',
       values: [username],
     };
     const result = await this._pool.query(query);
@@ -38,7 +38,7 @@ class UsersService {
 
   async getUserById(userId) {
     const query = {
-      text: 'SELECT id, username, fullname FROM users WHERE id = $1',
+      text: 'SELECT id, username, fullname FROM notesapp.users WHERE id = $1',
       values: [userId],
     };
     const result = await this._pool.query(query);
@@ -49,4 +49,4 @@ class UsersService {
   }
 }
 
-exports.module = UsersService;
+module.exports = UsersService;
