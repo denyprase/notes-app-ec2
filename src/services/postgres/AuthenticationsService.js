@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const { Pool } = require('pg');
 const InvariantError = require('../../exceptions/InvariantError');
-const NotFoundError = require('../../exceptions/NotFoundError');
+// const NotFoundError = require('../../exceptions/NotFoundError');
 
 class AuthenticationsService {
   constructor() {
