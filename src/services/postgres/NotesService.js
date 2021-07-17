@@ -30,7 +30,14 @@ class NotesService {
 
   async getNotes(owner) {
     const query = {
-      text: 'SELECT * FROM notesapp.notes WHERE owner = $1',
+      text: `SELECT 
+        n.*
+        --c.user_id
+      FROM notesapp.notes n
+      LEFT JOIN notesapp.collaborations c
+      ON c.note_id = n.id
+      WHERE n.owner = $1 OR c.user_id = $1
+      GROUP BY n.id;`,
       values: [owner],
     };
     const result = await this._pool.query(query);
