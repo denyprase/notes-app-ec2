@@ -8,7 +8,7 @@ class CollaborationsService {
     this._pool = new Pool();
   }
 
-  async addCollaboration(userId, noteId) {
+  async addCollaboration(noteId, userId) {
     const id = `collab-${nanoid(16)}`;
     const query = {
       text: 'INSERT INTO notesapp.collaborations VALUES($1, $2, $3) RETURNING id',
