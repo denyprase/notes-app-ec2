@@ -30,7 +30,14 @@ class NotesService {
 
   async getNotes(owner) {
     const query = {
-      text: 'SELECT * FROM notesapp.notes WHERE owner = $1',
+      text: `SELECT 
+        n.*
+        --c.user_id
+      FROM notesapp.notes n
+      LEFT JOIN notesapp.collaborations c
+      ON c.note_id = n.id
+      WHERE n.owner = $1 OR c.user_id = $1
+      GROUP BY n.id;`,
       values: [owner],
     };
     const result = await this._pool.query(query);
@@ -39,7 +46,13 @@ class NotesService {
 
   async getNoteById(id) {
     const query = {
-      text: 'SELECT * FROM notesapp.notes WHERE id = $1',
+      text: `SELECT 
+        n.*, 
+        u.username
+      FROM notesapp.notes n
+      LEFT JOIN notesapp.users u 
+      ON u.id = n.owner
+      WHERE n.id = $1`,
       values: [id],
     };
     const result = await this._pool.query(query);
